@@ -10,8 +10,8 @@ asyncio.run(main())     # ejecutar una corrutina
 
 
 
-# El siguiente fragmento de código imprimirá 'hola' después de esperar 1 segundo
-# y luego imprimirá 'mundo' después de esperar otros 2 segundos
+''''El siguiente fragmento de código imprimirá 'hola' después de esperar 1 segundo
+y luego imprimirá 'mundo' después de esperar otros 2 segundos'''
 
 import time    # debemos importar time
 
@@ -33,7 +33,7 @@ asyncio.run(main())
 
 
 
-#Aqui modificamos el ejemplo anterior y ejecutamos dos corrutinas decir_despues concurrentemente
+'''Aqui modificamos el ejemplo anterior y ejecutamos dos corrutinas decir_despues concurrentemente'''
 
 async def main():
     # create_task() para ejecutar corrutinas concurrentemente como asyncio Tasks.
@@ -46,3 +46,23 @@ async def main():
     await task1
     await task2
 
+    print(f"acaba a {time.strftime('%X')}")
+
+asyncio.run(main())  # en esta función se ejecuta 1 segundo mas rápido que antes
+
+
+'''Funcion anterior con TaskGroup'''
+
+async def main():
+    #TaskGroup() manera más moderna de hacer lo anterior
+    async with asyncio.TaskGroup() as tg:
+        task1 = tg.create_task(decir_despues(1, 'Hola'))
+        task2 = tg.create_task(decir_despues(2, 'world'))
+
+        print(f"Empieza a {time.strftime('%X')}")
+    
+    # el await está implicito cuando usamos el with (context manager)
+
+    print(f"acaba a {time.strftime('%X')}")
+
+asyncio.run(main())

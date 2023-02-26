@@ -48,13 +48,13 @@ async def main():
 
     print(f"acaba a {time.strftime('%X')}")
 
-asyncio.run(main())  # en esta función se ejecuta 1 segundo mas rápido que antes
+ # en esta función se ejecuta 1 segundo mas rápido que antes
 
 
 '''Funcion anterior con TaskGroup'''
 
-async def main():
-    #TaskGroup() manera más moderna de hacer lo anterior
+'''async def main():
+    #TaskGroup() para ejecutar corrutinas concurrentemente como asyncio Tasks.
     async with asyncio.TaskGroup() as tg:
         task1 = tg.create_task(decir_despues(1, 'Hola'))
         task2 = tg.create_task(decir_despues(2, 'world'))
@@ -65,4 +65,18 @@ async def main():
 
     print(f"acaba a {time.strftime('%X')}")
 
+asyncio.run(main())'''
+
+
+'''Decimos que un objeto es un objeto esperable si se puede utilizar en una expresión await. 
+Muchas API de asyncio están diseñadas para aceptar los valores esperables.
+Hay tres tipos principales de objetos esperables: corrutinas, Tareas y Futures.'''
+
+'''CORRUTINAS: son esperables y por lo tanto se pueden esperar de otras corrutinas'''
+async def anidado():
+    return 42
+
+async def main():
+    anidado()   # esto no devuelve nada, se crea un objeto corrutina pero no devuelve nada
+    print(await anidado())   # esto imprime "42"
 asyncio.run(main())

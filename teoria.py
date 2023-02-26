@@ -104,9 +104,8 @@ Cuando un objeto Future es esperado significa que la corrutina esperará hasta q
 # si name es None, se establece como el nombre de la tarea mediante task.set_name()
 # get_running_loop() ejecuta la tarea en el bucle retornado
 
-background_tasks = set()
-for i in range(10):
-    task = asyncio.create_task(some_coro(i))
-    background_tasks.add(task)     #añadimos
-    task.add_done_callback(background_tasks.discard)   #para evitar que queden las referencias de las tareas finalizadas esto hace que cada tarea elimine su propia referencia del conjunto
-    
+#background_tasks = set()
+#for i in range(10):
+#    task = asyncio.create_task(some_coro(i))
+#    background_tasks.add(task)     #añadimos
+#    task.add_done_callback(background_tasks.discard)   #para evitar que queden las referencias de las tareas finalizadas esto hace que cada tarea elimine su propia referencia del conjunto

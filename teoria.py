@@ -78,5 +78,35 @@ async def anidado():
 
 async def main():
     anidado()   # esto no devuelve nada, se crea un objeto corrutina pero no devuelve nada
-    print(await anidado())   # esto imprime "42"
+    print(await anidado())   # esto imprime "42", aquí anidado() es un objeto corrutina esperable
+
 asyncio.run(main())
+
+'''TAREAS: se utilizan para ejecutar corrutinas concurrentemente.'''
+async def anidado():
+    return 42
+
+async def main():
+    task = asyncio.create_task(anidado())   # crea una tarea para ejecutar anidado() y la devuelva
+    print(await task)   # espera hasta que la tarea se complete y devuelve el valor de return de anidado()
+
+asyncio.run(main())
+
+'''FUTURES: es un objeto esperable especial que representa un resultado eventual de una operación asíncrona.
+Cuando un objeto Future es esperado significa que la corrutina esperará hasta que el Future se resuelva en algún otro lugar.'''
+
+#async def main():
+#    await funcion_que_devuelve_un_objeto_future():
+#    await asyncio.gather(funcion_que_devuelve_un_objeto_future(), alguna_corrutina())  #.gather() agrupa varios objetos esperados juntos
+
+'''ASYNCIO:CREATE_TASK(CORO, *, NAME=None, CONTEST=None)'''
+'''Envuelve un acoroutine (coro) en un task y programa su ejecucion. Retorna el objeto tarea'''
+# si name es None, se establece como el nombre de la tarea mediante task.set_name()
+# get_running_loop() ejecuta la tarea en el bucle retornado
+
+background_tasks = set()
+for i in range(10):
+    task = asyncio.create_task(some_coro(i))
+    background_tasks.add(task)     #añadimos
+    task.add_done_callback(background_tasks.discard)   #para evitar que queden las referencias de las tareas finalizadas esto hace que cada tarea elimine su propia referencia del conjunto
+    

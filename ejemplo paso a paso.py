@@ -15,8 +15,8 @@ def get_uri_from_images_src(base_uri, images_src):
     parsed_base = urlparse(base_uri)       #analiza la base del URL. El elemento HTML <base> especifica la dirección URL base que se utilizará para todas las direcciones URL relativas contenidas dentro de un documento. Sólo puede haber un elemento <base> en un documento.
 
     for src in images_src:
-
-        if parsed_base == '':
+        parsed = urlparse(src)      #analiza el URL de la imagen
+        if parsed.netloc == '':
             path = parsed.path
             if parsed.query:
                 path += '?' + parsed.query
@@ -28,4 +28,7 @@ def get_uri_from_images_src(base_uri, images_src):
                 else:
                     path = '/' + '/'.join(parsed_base.path.split('/')[:-1]) + '/' + path
                 
-            yield parsed_base.scheme + '://' + parsed_base.netloc + path
+            yield parsed_base.scheme + '://' + parsed_base.netloc + path    #devolvemos cad aresultado en el momento en el que llega
+
+        else:
+            yield parsed.geturl()

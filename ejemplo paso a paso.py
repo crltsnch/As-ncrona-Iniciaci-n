@@ -17,7 +17,7 @@ def get_uri_from_images_src(base_uri, images_src):
     for src in images_src:
         parsed = urlparse(src)      #analiza el URL de la imagen
         if parsed.netloc == '':
-            path = parsed.path
+            path = parsed.path      #
             if parsed.query:
                 path += '?' + parsed.query
     

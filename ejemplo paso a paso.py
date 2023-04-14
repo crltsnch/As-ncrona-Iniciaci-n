@@ -42,19 +42,6 @@ async def get_uri_from_images_src(base_uri, images_src):
         asyncio.sleep(0.001) #espera 1 milisegundo
 
 
-'''Función que descarga las imágenes y escriba el archivo haciéndolas asíncronas'''
-async def main(uri):
-    async with aiohttp.ClientSession() as seession:
-        s = requests.Session()
-        async with s.get(uri) as response:
-            if response.status != 200:
-                return None
-            if response.content_type.startswith('text/'):
-                return await response.text()
-            else:
-                return await response.read()
-
-
 '''Función wget'''
 async def wget(session, uri):
     async with session.get(uri) as response:
@@ -65,6 +52,8 @@ async def wget(session, uri):
         else: # si no es texto
             return await response.read()   #esperamos a que se descargue el contenido de la respuesta
 
+
+
 '''Función download'''
 async def download(session, uri):
     content = await wget(session, uri)
@@ -73,6 +62,8 @@ async def download(session, uri):
     with open(uri.split('/')[-1], 'wb') as f:     #escritura del archivo en el disco duro
         f.write(content)
         return uri
+
+
 
 '''Función para descargar las imágenes de una página'''
 async def get_images(session, page_uri):

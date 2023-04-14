@@ -4,6 +4,7 @@
 from bs4 import BeautifulSoup  #BeautifulSoup nos permite extraer información de contenido en formato HTML o XML
 import aiohttp
 import asyncio
+import requests
 
 
 
@@ -42,7 +43,8 @@ def get_uri_from_images_src(base_uri, images_src):
 '''Función que descarga las imágenes y escribe el archivo haciéndolas asíncronas'''
 async def main(uri):
     async with aiohttp.ClientSession() as seession:
-        async with session.get(uri) as response:
+        s = requests.Session()
+        async with s.get(uri) as response:
             if response.status != 200:
                 return None
             if response.content_type.startswith('text/'):
@@ -50,6 +52,7 @@ async def main(uri):
             else:
                 return await response.read()
 
+'''Función wget'''
 async def wget(session, uri):
     async with session.get(uri) as response:
         if response.status != 200:
@@ -58,4 +61,13 @@ async def wget(session, uri):
             return await response.text()
         else:
             return await response.read()
-    
+
+'''Función download'''
+async def download(session, uri):
+    content = await wget(session, uri)
+    if content is None:
+        return None
+    with open(uri.split('/')[-1], 'wb') as f:     #escritura del archivo en el disco duro
+        f.write(content)
+        return uri
+

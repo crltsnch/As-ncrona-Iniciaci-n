@@ -54,6 +54,7 @@ async def main(uri):
             else:
                 return await response.read()
 
+
 '''Función wget'''
 async def wget(session, uri):
     async with session.get(uri) as response:
@@ -80,3 +81,19 @@ async def get_images(session, page_uri):
         print('Error: no se ha encontrado ninguna página', sys.stderr)
         return None
     images_src_gen = get_images_scr_from_html(html)
+    images_uri_gen = get_uri_from_images_src(page_uri, images_src_gen)
+    async for image_uri in images_uri_gen:    #recorremos todas las uris de las imágenes
+        print('Descarga de %s' % image_uri)   #descarga del (uri)
+        await download(session, image_uri)
+
+
+'''Funcion principal'''
+async def main():
+    web_page_uri = 'http://www.formation-python.com/'
+    async with aiohttp.ClientSession() as session:
+        await get_images(session, web_page_uri)
+
+'''Función para escribir en un archivo'''
+async def write_file(filename, content):
+    with open(filename, "wb") as f:
+        f.write(content)

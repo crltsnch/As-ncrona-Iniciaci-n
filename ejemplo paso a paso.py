@@ -10,7 +10,7 @@ import sys
 
 '''Función descargar las imágenes de una página HTML'''
 '''Cuando se encuentre una imgaen se parsará a la siguiente funcion y se devolverá el control durante una siguiente espera en el programa'''
-def get_images_scr_from_html(html_doc):
+async def get_images_scr_from_html(html_doc):
     '''Recupera todo el contenido de los atributos src de las etiquetas img'''
     soup = BeautifulSoup(html_doc, 'html.parser')    #analiza el conjunto de la página
     for img in soup.find_all('img'):    #busca todas las etiquetas img
@@ -20,7 +20,7 @@ def get_images_scr_from_html(html_doc):
 
 '''Ahora queremos cada URI de cada imagen a descargar'''
 '''Se trata de otro generador pero que  trabaja a partir de los resultados del anterior'''
-def get_uri_from_images_src(base_uri, images_src):
+async def get_uri_from_images_src(base_uri, images_src):
     parsed_base = urlparse(base_uri)       #analiza la base del URI. El elemento HTML <base> especifica la dirección URL base que se utilizará para todas las direcciones URL relativas contenidas dentro de un documento. Sólo puede haber un elemento <base> en un documento.
     for src in images_src:
         parsed = urlparse(src)      #analiza el URI de la imagen
@@ -94,6 +94,6 @@ async def main():
         await get_images(session, web_page_uri)
 
 '''Función para escribir en un archivo'''
-async def write_file(filename, content):
-    with open(filename, "wb") as f:
-        f.write(content)
+def write_file(filename, content):
+    with open(filename, "wb") as f:    #abrir
+        f.write(content)     #reescribir

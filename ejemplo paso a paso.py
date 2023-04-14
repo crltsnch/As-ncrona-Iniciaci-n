@@ -5,8 +5,9 @@ from bs4 import BeautifulSoup  #BeautifulSoup nos permite extraer información d
 from urllib.parse import urlparse        # Este módulo define una interfaz estándar para dividir las URL en componentes (esquema de direccionamiento, ubicación de red, ruta, etc.), para combinar los componentes nuevamente en una cadena de URL y convertir una 'URL relativa' (versión abreviada de la absoluta) en una 'URL absoluta' dada una 'URL base'.
 import aiohttp
 import asyncio
-import requests
 import sys
+
+
 
 '''Función descargar las imágenes de una página HTML'''
 '''Cuando se encuentre una imgaen se parsará a la siguiente funcion y se devolverá el control durante una siguiente espera en el programa'''

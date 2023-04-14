@@ -2,21 +2,22 @@
 # Para no tener que esperar a recolectar todos los datos antes de tratarlos utilizamos los generadores.
 
 from bs4 import BeautifulSoup  #BeautifulSoup nos permite extraer información de contenido en formato HTML o XML
+from urllib.parse import urlparse        # Este módulo define una interfaz estándar para dividir las URL en componentes (esquema de direccionamiento, ubicación de red, ruta, etc.), para combinar los componentes nuevamente en una cadena de URL y convertir una 'URL relativa' (versión abreviada de la absoluta) en una 'URL absoluta' dada una 'URL base'.
 import aiohttp
 import asyncio
 import requests
 
 
-
-def get_images_scr_from_html(html_doc):    #descargar las imagenes de una página HTML
+'''Función descargar las imágenes de una página HTML'''
+def get_images_scr_from_html(html_doc):
     '''Recupera todo el contenido de los atributos src de las etiquetas img'''
     soup = BeautifulSoup(html_doc, 'html.parser')    #analiza el conjunto de la página
-    return (img.get('src') for img in soup.find_all('img'))   #devuelve un generador poruqe hemos cambiado los corchetes por paréntesis como en generaodres.py
+    for img in soup.find_all('img'):    #busca todas las etiquetas img
+        yield img.get('src')    #devuelve cada resultado en el momento en el que llega
+        asyncio.sleep(0.001) #espera 1 milisegundo
 
 
 '''Ahora queremos cada URI de la imagen a descargar'''
-from urllib.parse import urlparse        # Este módulo define una interfaz estándar para dividir las URL en componentes (esquema de direccionamiento, ubicación de red, ruta, etc.), para combinar los componentes nuevamente en una cadena de URL y convertir una 'URL relativa' (versión abreviada de la absoluta) en una 'URL absoluta' dada una 'URL base'.
-
 def get_uri_from_images_src(base_uri, images_src):
     parsed_base = urlparse(base_uri)       #analiza la base del URL. El elemento HTML <base> especifica la dirección URL base que se utilizará para todas las direcciones URL relativas contenidas dentro de un documento. Sólo puede haber un elemento <base> en un documento.
 

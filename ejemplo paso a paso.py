@@ -6,7 +6,7 @@ from urllib.parse import urlparse        # Este módulo define una interfaz est�
 import aiohttp
 import asyncio
 import requests
-
+import sys
 
 '''Función descargar las imágenes de una página HTML'''
 '''Cuando se encuentre una imgaen se parsará a la siguiente funcion y se devolverá el control durante una siguiente espera en el programa'''
@@ -77,6 +77,6 @@ async def download(session, uri):
 async def get_images(session, page_uri):
     html = await wget(session, page_uri)
     if not html:
-        print('Error: no se ha encontrado ninguna página')
+        print('Error: no se ha encontrado ninguna página', sys.stderr)
         return None
-    images_src_gen = 
+    images_src_gen = get_images_scr_from_html(html)

@@ -6,6 +6,7 @@ from urllib.parse import urlparse        # Este módulo define una interfaz est�
 import aiohttp
 import asyncio
 import sys
+import time
 
 
 '''Función descargar las imágenes de una página HTML'''
@@ -16,7 +17,6 @@ async def get_images_scr_from_html(html_doc):
     for img in soup.find_all('img'):    #busca todas las etiquetas img
         yield img.get('src')    #devuelve cada resultado en el momento en el que llega
         await asyncio.sleep(0.001)    #espera 1 milisegundo
-
 
 
 '''Ahora queremos cada URI de cada imagen a descargar'''
@@ -90,3 +90,14 @@ async def main():
 def write_file(filename, content):
     with open(filename, "wb") as f:    #abrir
         f.write(content)     #reescribir
+
+
+def test():
+    asyncio.run(main())  #ejecutar la función principal
+
+
+if __name__ == '__main__':
+    #tiempo de ejecucion
+    start_time = time.time()
+    test()
+    print("--- %s seconds ---" % (time.time() - start_time))

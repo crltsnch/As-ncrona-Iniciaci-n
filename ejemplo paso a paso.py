@@ -57,12 +57,12 @@ async def wget(session, uri):
 
 '''Función download'''
 async def download(session, uri):
-    content = await wget(session, uri)
-    if content is None:
+    content = await wget(session, uri)   #hacemos la petición
+    if content is None:    #si no hay contenido
         return None
-    with open(uri.split('/')[-1], 'wb') as f:     #escritura del archivo en el disco duro
-        f.write(content)
-        return uri
+    with open(uri.split('/')[-1], 'wb') as f:     #abrimos el archivo
+        f.write(content)    #escribimos el contenido
+        return uri     #devolvemos la URI
 
 
 

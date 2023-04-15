@@ -61,37 +61,19 @@ def download(session, uri):
 
 
 '''Función para descargar las imágenes de una página'''
-def get_images(session, page_uri):
-    html = wget(session, page_uri)   #hacemos una peticion a la página
+def get_images(page_uri):
+    html = wget(page_uri)   #hacemos una peticion a la página
     if not html:   #si no hay html: error
-        print('Error: no se ha encontrado ninguna página', sys.stderr)
+        print('Error: no se ha encontrado ninguna imagen', sys.stderr)
         return None
     images_src_gen = get_images_scr_from_html(html)   #obtenemos las imágenes de la página
     images_uri_gen = get_uri_from_images_src(page_uri, images_src_gen)   #obtenemos las URI de las imágenes
     for image_uri in images_uri_gen:    #recorremos todas las uris de las imágenes
         print('Descarga de %s' % image_uri)   #descarga de (uri de la imagen)
-        download(session, image_uri)   #descargamos la  imagen
-
-
-'''Funcion principal'''
-async def main():
-    web_page_uri = 'http://www.formation-python.com/'
-    async with aiohttp.ClientSession() as session:  #creamos una sesion para hacer las peticiones
-        await get_images(session, web_page_uri)   #descargamos las imágenes
-
-
-'''Función para escribir en un archivo'''
-def write_file(filename, content):
-    with open(filename, "wb") as f:    #abrir
-        f.write(content)     #reescribir
-
-
-def test():
-    asyncio.run(main())  #ejecutar la función principal
+        download(image_uri)   #descargamos la  imagen
 
 
 if __name__ == '__main__':
     #tiempo de ejecucion
     start_time = time.time()
-    test()
     print("--- %s seconds ---" % (time.time() - start_time))

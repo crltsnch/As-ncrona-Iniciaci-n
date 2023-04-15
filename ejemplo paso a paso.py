@@ -68,15 +68,15 @@ async def download(session, uri):
 
 '''Función para descargar las imágenes de una página'''
 async def get_images(session, page_uri):
-    html = await wget(session, page_uri)
-    if not html:
+    html = await wget(session, page_uri)   #hacemos una peticion a la página
+    if not html:   #si no hay html: error
         print('Error: no se ha encontrado ninguna página', sys.stderr)
         return None
-    images_src_gen = get_images_scr_from_html(html)
-    images_uri_gen = get_uri_from_images_src(page_uri, images_src_gen)
+    images_src_gen = get_images_scr_from_html(html)   #obtenemos las imágenes de la página
+    images_uri_gen = get_uri_from_images_src(page_uri, images_src_gen)   #obtenemos las URI de las imágenes
     async for image_uri in images_uri_gen:    #recorremos todas las uris de las imágenes
-        print('Descarga de %s' % image_uri)   #descarga del (uri)
-        await download(session, image_uri)
+        print('Descarga de %s' % image_uri)   #descarga de (uri de la imagen)
+        await download(session, image_uri)   #descargamos la  imagen
 
 
 '''Funcion principal'''

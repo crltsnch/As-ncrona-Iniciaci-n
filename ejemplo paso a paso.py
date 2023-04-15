@@ -23,24 +23,24 @@ async def get_images_scr_from_html(html_doc):
 '''Se trata de otro generador pero que  trabaja a partir de los resultados del anterior'''
 async def get_uri_from_images_src(base_uri, images_src):
     parsed_base = urlparse(base_uri)       #analiza la base del URI. El elemento HTML <base> especifica la dirección URL base que se utilizará para todas las direcciones URL relativas contenidas dentro de un documento. Sólo puede haber un elemento <base> en un documento.
-    for src in images_src:
-        parsed = urlparse(src)      #analiza el URI de la imagen
-        if parsed.netloc == '':
-            path = parsed.path      
-            if parsed.query:
-                path += '?' + parsed.query
-            elif path[0] != '/':
-                if parsed_base.path == '/':
-                    path = '/' + path
+    async for src in images_src:
+        parsed = urlparse(src)     #analiza el URI de la imagen
+        if parsed.netloc == '':      #.netloc es network location (ubicación de la red), inlcuye el dominio. Si no hay dominio:
+            path = parsed.path    #.path contiene información de como se debe acceder al recurso especificado en la URI (ruta)
+            if parsed.query:    #.query consultas. Si hay consultas:
+                path += '?' + parsed.query   #se añade la consulta a la ruta
+            elif path[0] != '/':     #si la ruta no empieza por /
+                if parsed_base.path == '/':    #si la ruta de la base es /
+                    path = '/' + path      #añadimos la ruta a la ruta base
                 else:
-                    path = '/' + '/'.join(parsed_base.path.split('/')[:-1]) + '/' + path
+                    path = '/' + '/'.join(parsed_base.path.split('/')[:-1]) + '/' + path   #añadimos la rura a la ruta base
                 
             yield parsed_base.scheme + '://' + parsed_base.netloc + path    #devolvemos cada resultado en el momento en el que llega
         
-        else:
+        else:  #si hay dominio
             yield parsed.geturl()     #devolvemos la URI de la imagen
 
-        asyncio.sleep(0.001) #espera 1 milisegundo
+        await asyncio.sleep(0.001)   #espera 1 milisegundo
 
 
 '''Función wget'''

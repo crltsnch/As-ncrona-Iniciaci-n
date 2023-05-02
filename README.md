@@ -108,7 +108,7 @@ if __name__ == '__main__':
     print("--- El tiempo es asíncrono es de %s segundos ---" % (time.time() - start_time))
 ```
 
-![Imagen tiempo en asincrono](/Users/carlotasanchezgonzalez/Desktop/Captura de pantalla 2023-05-02 a las 18.49.31.png)
+![imagen del tiempo en asincrono](/Users/carlotasanchezgonzalez/Desktop/Tiempo asincrono.png)
 
 #Archivo sinasincrono.py
 
@@ -193,3 +193,5 @@ if __name__ == '__main__':
     get_images('http://www.formation-python.com/')
     print("--- El tiempo sin asíncrono es de %s segundos ---" % (time.time() - start_time))
  ```
+ 
+![Tiempo sin asincrono](/Users/carlotasanchezgonzalez/Desktop/Tiempo sin asincrono.png)

@@ -108,6 +108,8 @@ if __name__ == '__main__':
     print("--- El tiempo es asíncrono es de %s segundos ---" % (time.time() - start_time))
 ```
 
+ ![Tiempo en asincrono](https://github.com/crltsnch/Asincrona-Iniciacion/blob/main/Tiempo%20asincrono.png)
+
 
 #Archivo sinasincrono.py
 
@@ -192,4 +194,5 @@ if __name__ == '__main__':
     get_images('http://www.formation-python.com/')
     print("--- El tiempo sin asíncrono es de %s segundos ---" % (time.time() - start_time))
  ```
- ![Tiempo sin asincrono](https://github.com/crltsnch/Asincrona-Iniciacion/blob/main/Tiempo%20asincrono.png)
+
+![Tiempo sin asincrono](https://github.com/crltsnch/Asincrona-Iniciacion/blob/main/Tiempo%20sin%20asincrono.png)

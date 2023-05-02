@@ -1,6 +1,5 @@
 from bs4 import BeautifulSoup  #BeautifulSoup nos permite extraer información de contenido en formato HTML o XML
 from urllib.parse import urlparse        # Este módulo define una interfaz estándar para dividir las URL en componentes (esquema de direccionamiento, ubicación de red, ruta, etc.), para combinar los componentes nuevamente en una cadena de URL y convertir una 'URL relativa' (versión abreviada de la absoluta) en una 'URL absoluta' dada una 'URL base'.
-import aiohttp
 import sys
 import time
 import requests
@@ -36,19 +35,19 @@ def get_uri_from_images_src(base_uri, images_src):
 
 
 '''Función wget'''
-def wget(session, uri):
+def wget(uri):
     response = requests.get(uri)    #para hacer una petición al contenido de una URI
     if response.status_code != 200:   #indica el estado de la respuesta, 200 es correcto
         return None
     if response.headers['Content-Type'].startswith('text/'):    #si el tipo de contenido es texto
-        return response.text()   #devuelve el contenido de la respuesta
+        return response.text  #devuelve el contenido de la respuesta
     else:    #si no es texto
-        return response.content()   #devolvemos el contenido de la respuesta
+        return response.content   #devolvemos el contenido de la respuesta
 
 
 
 '''Función download'''
-def download(session, uri):
+def download(uri):
     response = response.get(uri)   #hacemos la petición
     if response.status_code != 200:    #si no hay contenido
         return None
@@ -76,4 +75,5 @@ def get_images(page_uri):
 if __name__ == '__main__':
     #tiempo de ejecucion
     start_time = time.time()
-    print("--- %s seconds ---" % (time.time() - start_time))
+    get_images('http://www.formation-python.com/')
+    print("--- El tiempo sin asíncrono es de %s segundos ---" % (time.time() - start_time))

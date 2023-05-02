@@ -100,4 +100,4 @@ if __name__ == '__main__':
     #tiempo de ejecucion
     start_time = time.time()
     test()
-    print("--- %s seconds ---" % (time.time() - start_time))
+    print("--- El tiempo es asíncrono es de %s segundos ---" % (time.time() - start_time))
